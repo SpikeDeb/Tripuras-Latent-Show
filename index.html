@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Tripura's latent show — Contestant Entry</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #1B1310;
+    --bg-soft: #241A15;
+    --card: #2A1F19;
+    --chili: #E6432B;
+    --chili-dark: #B92F1C;
+    --turmeric: #F0A73B;
+    --cream: #F7ECDC;
+    --muted: #B7A392;
+    --line: rgba(247,236,220,0.12);
+    --leaf: #6E9152;
+    --radius: 18px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--cream);
+    font-family:'Inter',sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important; transition:none !important;}
+  }
+  h1,h2,h3,.display{
+    font-family:'Baloo 2',sans-serif;
+    font-weight:800;
+    letter-spacing:0.2px;
+  }
+  a{color:inherit;}
+  .wrap{max-width:640px; margin:0 auto; padding:0 22px;}
+
+  /* ---------- Ambient background texture ---------- */
+  .bg-glow{
+    position:fixed; inset:0; z-index:0; pointer-events:none;
+    background:
+      radial-gradient(600px 400px at 15% -5%, rgba(230,67,43,0.25), transparent 60%),
+      radial-gradient(500px 380px at 100% 10%, rgba(240,167,59,0.16), transparent 55%);
+  }
+
+  /* ---------- Floating spice particles ---------- */
+  .particle{
+    position:absolute; border-radius:50%;
+    filter: blur(0.5px);
+    opacity:0.55;
+    animation: drift 9s ease-in-out infinite;
+  }
+  @keyframes drift{
+    0%,100%{ transform: translateY(0) translateX(0) rotate(0deg); }
+    50%{ transform: translateY(-16px) translateX(6px) rotate(8deg); }
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative; z-index:1;
+    padding:56px 0 34px;
+    overflow:hidden;
+  }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:'Inter',sans-serif; font-weight:600; font-size:12.5px;
+    letter-spacing:1.4px; text-transform:uppercase;
+    color:var(--turmeric);
+    background:rgba(240,167,59,0.1);
+    border:1px solid rgba(240,167,59,0.35);
+    padding:6px 14px; border-radius:999px;
+  }
+  .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--chili);}
+  .title{
+    font-size:clamp(38px, 9vw, 54px);
+    line-height:0.98;
+    margin:20px 0 6px;
+    color:var(--cream);
+  }
+  .title span{color:var(--chili);}
+  .subtitle{
+    font-size:16.5px; color:var(--muted); max-width:480px; margin:0 0 26px;
+  }
+  .stat-row{
+    display:flex; gap:10px; flex-wrap:wrap; margin-bottom:6px;
+  }
+  .stat-chip{
+    background:var(--card); border:1px solid var(--line);
+    border-radius:12px; padding:10px 14px;
+    font-size:13px; color:var(--cream); font-weight:600;
+    display:flex; align-items:center; gap:8px;
+  }
+  .stat-chip b{color:var(--turmeric); font-family:'Baloo 2',sans-serif; font-size:16px;}
+
+  /* ---------- How it works strip ---------- */
+  .how{
+    position:relative; z-index:1;
+    background:var(--bg-soft);
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    padding:26px 0;
+  }
+  .how-title{
+    font-size:12.5px; text-transform:uppercase; letter-spacing:1.4px;
+    color:var(--muted); font-weight:700; margin:0 0 16px;
+  }
+  .how-steps{ display:flex; flex-direction:column; gap:14px; }
+  .how-step{ display:flex; gap:14px; align-items:flex-start; }
+  .how-num{
+    flex:none; width:32px; height:32px; border-radius:9px;
+    background:var(--chili); color:#fff;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Baloo 2',sans-serif; font-weight:700; font-size:14px;
+  }
+  .how-step p{margin:0; font-size:14px; color:var(--cream);}
+  .how-step p b{color:var(--turmeric);}
+
+  /* ---------- Form section ---------- */
+  .form-section{ position:relative; z-index:1; padding:40px 0 70px; }
+  .form-head{ margin-bottom:24px; }
+  .form-head h2{ font-size:26px; margin:0 0 6px; color:var(--cream); }
+  .form-head p{ margin:0; color:var(--muted); font-size:14px; }
+
+  .field{ margin-bottom:20px; }
+  .field label{
+    display:block; font-size:13px; font-weight:600;
+    color:var(--turmeric); margin-bottom:8px; letter-spacing:0.2px;
+  }
+  .field .hint{
+    display:block; font-size:12px; color:var(--muted); margin-top:6px; font-weight:400;
+  }
+  input[type=text], input[type=tel], input[type=url], textarea{
+    width:100%; background:var(--card); border:1.5px solid var(--line);
+    color:var(--cream); border-radius:12px; padding:13px 14px;
+    font-family:'Inter',sans-serif; font-size:15px;
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+  input::placeholder, textarea::placeholder{ color:#7C6C5D; }
+  input:focus, textarea:focus{
+    outline:none; border-color:var(--chili); background:#2E2119;
+  }
+  .insta-field{ position:relative; }
+  .insta-field .at{
+    position:absolute; left:14px; top:50%; transform:translateY(-50%);
+    color:var(--muted); font-size:15px; pointer-events:none;
+  }
+  .insta-field input{ padding-left:28px; }
+
+  textarea{ min-height:110px; resize:vertical; font-family:'Inter',sans-serif; }
+  .counter{ text-align:right; font-size:11.5px; color:var(--muted); margin-top:6px; }
+
+  /* Chip select for content type */
+  .chip-grid{ display:flex; flex-wrap:wrap; gap:9px; }
+  .chip{
+    border:1.5px solid var(--line); background:var(--card);
+    color:var(--cream); padding:10px 16px; border-radius:999px;
+    font-size:13.5px; font-weight:600; cursor:pointer;
+    display:flex; align-items:center; gap:7px;
+    transition: all 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .chip .ic{ font-size:15px; }
+  .chip.active{
+    background:linear-gradient(135deg, var(--chili), var(--chili-dark));
+    border-color:var(--chili);
+    color:#fff;
+  }
+
+  fieldset{ border:none; padding:0; margin:0; }
+
+  .consent{
+    display:flex; gap:11px; align-items:flex-start;
+    background:var(--card); border:1px solid var(--line);
+    border-radius:12px; padding:14px 16px; margin-bottom:24px;
+  }
+  .consent input{ margin-top:3px; width:17px; height:17px; accent-color:var(--chili); flex:none; }
+  .consent label{ font-size:13px; color:var(--muted); line-height:1.5; }
+
+  .submit-btn{
+    width:100%; border:none; border-radius:14px;
+    background:linear-gradient(135deg, var(--chili), var(--chili-dark));
+    color:#fff; font-family:'Baloo 2',sans-serif; font-weight:700; font-size:17px;
+    padding:16px; cursor:pointer;
+    box-shadow: 0 10px 24px -8px rgba(230,67,43,0.55);
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+  }
+  .submit-btn:active{ transform: scale(0.98); }
+  .submit-btn:disabled{ opacity:0.6; cursor:not-allowed; }
+  .error-msg{
+    color:#F0A73B; font-size:12.5px; margin-top:8px; display:none;
+  }
+
+  /* ---------- Success state ---------- */
+  .success-screen{
+    display:none; position:relative; z-index:1;
+    padding:80px 0 90px; text-align:center;
+  }
+  .success-badge{
+    width:74px; height:74px; border-radius:50%;
+    background:var(--leaf); margin:0 auto 22px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:34px;
+  }
+  .success-screen h2{ font-size:26px; margin:0 0 10px; }
+  .success-screen p{ color:var(--muted); font-size:14.5px; max-width:400px; margin:0 auto 26px; }
+  .success-code{
+    display:inline-block; background:var(--card); border:1px solid var(--line);
+    border-radius:10px; padding:10px 18px; font-family:'Baloo 2',sans-serif;
+    font-size:15px; color:var(--turmeric); letter-spacing:1px;
+  }
+
+  /* ---------- Footer ---------- */
+  footer{
+    position:relative; z-index:1;
+    border-top:1px solid var(--line);
+    padding:22px 0 32px;
+    text-align:center;
+  }
+  footer p{ font-size:12px; color:var(--muted); margin:0 0 10px; }
+  .admin-link{
+    font-size:11.5px; color:#7C6C5D; text-decoration:underline; cursor:pointer;
+    background:none; border:none; font-family:'Inter',sans-serif;
+  }
+
+  /* ---------- Admin panel ---------- */
+  .admin-panel{
+    display:none; position:relative; z-index:1;
+    background:var(--bg-soft); border-top:1px solid var(--line);
+    padding:30px 0 50px;
+  }
+  .admin-panel h3{ font-size:18px; margin:0 0 4px; }
+  .admin-panel .sub{ font-size:12.5px; color:var(--muted); margin-bottom:18px; }
+  .entry{
+    background:var(--card); border:1px solid var(--line); border-radius:12px;
+    padding:14px 16px; margin-bottom:12px; font-size:13px;
+  }
+  .entry .row{ display:flex; justify-content:space-between; gap:10px; margin-bottom:4px; }
+  .entry .name{ font-weight:700; color:var(--turmeric); }
+  .entry .tag{ font-size:11px; background:var(--chili); color:#fff; padding:3px 9px; border-radius:999px; }
+  .entry .meta{ color:var(--muted); font-size:12px; margin-top:6px; }
+  .entry a{ color:var(--turmeric); word-break:break-all; }
+  .empty-note{ color:var(--muted); font-size:13px; }
+</style>
+</head>
+<body>
+
+<div class="bg-glow"></div>
+<div id="particles"></div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap">
+    <span class="eyebrow"><span class="dot"></span> Season 1 · Open Casting</span>
+    <h1 class="title">Tripura's<br><span>latent show</span></h1>
+    <p class="subtitle">3 contestants. 30 seconds each. One 90-second reel. Junta hi judge, junta hi jury — vote decides who wins.</p>
+    <div class="stat-row">
+      <div class="stat-chip"><b>30s</b> per contestant</div>
+      <div class="stat-chip"><b>Insta</b> only</div>
+      <div class="stat-chip"><b>Junta</b> votes</div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how">
+  <div class="wrap">
+    <p class="how-title">How your entry gets on the show</p>
+    <div class="how-steps">
+      <div class="how-step">
+        <div class="how-num">1</div>
+        <p>Fill the form below with your details and a <b>link to your 30-second clip</b> (video or voice note).</p>
+      </div>
+      <div class="how-step">
+        <div class="how-num">2</div>
+        <p>Best entries get <b>shortlisted</b> and paired with 2 other contestants for a weekly 90-second reel.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-num">3</div>
+        <p>The reel goes live on Instagram — <b>junta votes</b> in the comments, and the winner gets featured + a prize.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FORM -->
+<section class="form-section" id="form-section">
+  <div class="wrap">
+    <div class="form-head">
+      <h2>Enter the Battle</h2>
+      <p>Takes about 2 minutes. Keep your Instagram profile public so we can verify your entry.</p>
+    </div>
+
+    <form id="entryForm" action="https://formspree.io/f/xgaworqj" method="POST" novalidate>
+      <div class="field">
+        <label for="fullName">Full name</label>
+        <input type="text" id="fullName" name="FullName" placeholder="e.g. Rintu Debbarma" required />
+      </div>
+
+      <div class="field">
+        <label for="city">City / town in Tripura</label>
+        <input type="text" id="city" name="City" placeholder="e.g. Agartala, Udaipur, Dharmanagar…" required />
+      </div>
+
+      <div class="field">
+        <label for="insta">Instagram handle</label>
+        <div class="insta-field">
+          <span class="at">@</span>
+          <input type="text" id="insta" name="Instagram" placeholder="yourusername" required />
+        </div>
+        <span class="hint">This is where we'll tag you if you're shortlisted.</span>
+      </div>
+
+      <div class="field">
+        <label for="whatsapp">WhatsApp number</label>
+        <input type="tel" id="whatsapp" name="WhatsApp" placeholder="10-digit mobile number" required />
+      </div>
+
+      <div class="field">
+        <label>What kind of entertainer are you?</label>
+        <fieldset class="chip-grid" id="contentType">
+          <button type="button" class="chip" data-value="Comedy"><span class="ic">😂</span> Comedy</button>
+          <button type="button" class="chip" data-value="Shayari"><span class="ic">✍️</span> Shayari</button>
+          <button type="button" class="chip" data-value="Talent"><span class="ic">🎤</span> Talent</button>
+          <button type="button" class="chip" data-value="Story"><span class="ic">📖</span> Real Story</button>
+          <button type="button" class="chip" data-value="Wildcard"><span class="ic">🌶️</span> Wildcard</button>
+        </fieldset>
+        <input type="hidden" name="Category" id="hiddenCategory" required>
+        <span class="error-msg" id="typeError">Pick one category.</span>
+      </div>
+
+      <div class="field">
+        <label for="pitch">Describe your 30-second act</label>
+        <textarea id="pitch" name="Pitch" maxlength="280" placeholder="What will you do in your 30 seconds? Keep it punchy — the judges are the audience, so make it easy to picture."></textarea>
+        <div class="counter"><span id="charCount">0</span>/280</div>
+      </div>
+
+      <div class="field">
+        <label for="videoLink">Link to your clip</label>
+        <input type="url" id="videoLink" name="VideoLink" placeholder="Google Drive, Instagram Reel, or YouTube link" required />
+        <span class="hint">Upload your 30-second video or voice note anywhere shareable and paste the link here — Google Drive (set to "Anyone with the link") works great.</span>
+      </div>
+
+      <div class="consent">
+        <input type="checkbox" id="consent" required />
+        <label for="consent">I confirm this is my own content and I agree to be featured on Tripura's latent show's Instagram if shortlisted.</label>
+      </div>
+
+      <button type="submit" class="submit-btn" id="submitBtn">Submit My Entry</button>
+    </form>
+  </div>
+</section>
+
+<!-- SUCCESS -->
+<section class="success-screen" id="successScreen">
+  <div class="wrap">
+    <div class="success-badge">🔥</div>
+    <h2>Entry received!</h2>
+    <p>Your entry is in the pot. If you're shortlisted for this week's battle, we'll DM your Instagram handle before the reel goes live.</p>
+    <div class="success-code" id="entryCode">TDL-0000</div>
+  </div>
+</section>
+
+<footer>
+  <p>Tripura's latent show — a local entertainment battle, only on Instagram.</p>
+</footer>
+
+<script>
+  // ---------- floating particles ----------
+  const particleHost = document.getElementById('particles');
+  const emojis = ['🌶️','✨','🔥'];
+  for (let i = 0; i < 6; i++) {
+    const el = document.createElement('div');
+    el.className = 'particle';
+    el.textContent = emojis[i % emojis.length];
+    el.style.fontSize = (12 + Math.random()*10) + 'px';
+    el.style.left = (Math.random()*90 + 2) + '%';
+    el.style.top = (Math.random()*70 + 5) + '%';
+    el.style.animationDuration = (7 + Math.random()*5) + 's';
+    el.style.animationDelay = (Math.random()*4) + 's';
+    document.querySelector('.hero').appendChild(el);
+  }
+
+  // ---------- chip select ----------
+  let selectedType = null;
+  const hiddenCategory = document.getElementById('hiddenCategory');
+  
+  document.querySelectorAll('#contentType .chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      document.querySelectorAll('#contentType .chip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      selectedType = chip.dataset.value;
+      hiddenCategory.value = selectedType; // Update hidden input for Formspree
+      document.getElementById('typeError').style.display = 'none';
+    });
+  });
+
+  // ---------- char counter ----------
+  const pitch = document.getElementById('pitch');
+  const charCount = document.getElementById('charCount');
+  pitch.addEventListener('input', () => {
+    charCount.textContent = pitch.value.length;
+  });
+
+  // ---------- submit ----------
+  const form = document.getElementById('entryForm');
+  const submitBtn = document.getElementById('submitBtn');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    if (!selectedType) {
+      document.getElementById('typeError').style.display = 'block';
+      document.getElementById('contentType').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting…';
+
+    const code = 'TDL-' + Math.floor(1000 + Math.random() * 9000);
+    
+    // Prepare data for Formspree
+    const formData = new FormData(form);
+    formData.append("Entry Code", code); // Append custom entry code
+
+    try {
+      const response = await fetch(form.action, {
+        method: form.method,
+        body: formData,
+        headers: {
+            'Accept': 'application/json'
+        }
+      });
+      
+      if (response.ok) {
+        // Show success screen
+        document.getElementById('entryCode').textContent = code;
+        document.getElementById('form-section').style.display = 'none';
+        document.querySelector('.how').style.display = 'none';
+        document.getElementById('successScreen').style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        alert("Oops! There was a problem submitting your form.");
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit My Entry';
+      }
+    } catch (error) {
+      console.error('Submission error:', error);
+      alert("Network error! Please check your connection and try again.");
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Submit My Entry';
+    }
+  });
+</script>
+</body>
+</html>
