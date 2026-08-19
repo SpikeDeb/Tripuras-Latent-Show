@@ -36,7 +36,7 @@
   img{max-width:100%; display:block;}
   .wrap{ max-width:1180px; margin:0 auto; padding:0 24px; }
   ::selection{ background:var(--gold); color:var(--navy-950); }
-  button{ font-family:inherit; cursor: pointer; border: none;}
+  button{ font-family:inherit; cursor: pointer; border: none; }
 
   .spike-mark{ display:inline-flex; align-items:center; gap:8px; }
   .spike-mark svg{ height:22px; width:auto; }
@@ -163,6 +163,9 @@
   .review-who{ font-size:13px; font-weight:600; }
   .review-role{ font-size:11.5px; color:var(--slate-dim); }
   .review-note{ font-size:11px; color:var(--slate-dim); margin-top:36px; text-align:center; }
+  .feedback-box{ margin-top:36px; background:var(--navy-900); border:1px solid var(--line); border-radius:var(--radius); padding:26px; display:flex; justify-content:space-between; align-items:center; gap:20px; flex-wrap:wrap; }
+  .feedback-box h4{ font-size:16px; margin-bottom:6px; }
+  .feedback-box p{ font-size:13px; color:var(--slate); }
 
   footer{ background:var(--navy-900); border-top:1px solid var(--line); padding:64px 0 30px; }
   .foot-grid{ display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:40px; }
@@ -172,11 +175,17 @@
   .foot-col a:hover{ color:var(--white); }
   .foot-bottom{ margin-top:50px; padding-top:24px; border-top:1px solid var(--line); display:flex; justify-content:space-between; flex-wrap:wrap; gap:14px; font-size:12.5px; color:var(--slate-dim); }
 
+  .wa-float{ position:fixed; bottom:22px; right:22px; z-index:60; width:54px; height:54px; border-radius:50%; background:#25D366; display:flex; align-items:center; justify-content:center; box-shadow:0 12px 30px -8px rgba(37,211,102,0.6); transition:.25s; }
+  .wa-float:hover{ transform:scale(1.08); }
+
+  .reveal{ opacity:0; transform:translateY(22px); transition:opacity .7s ease, transform .7s ease; }
+  .reveal.in{ opacity:1; transform:none; }
+
   /* modal */
   .modal-overlay{ position:fixed; inset:0; background:rgba(5,8,13,0.72); backdrop-filter:blur(6px); z-index:100; display:none; align-items:center; justify-content:center; padding:20px; }
   .modal-overlay.open{ display:flex; }
   .modal{ background:linear-gradient(180deg, var(--navy-850), var(--navy-900)); border:1px solid var(--line); border-radius:18px; padding:30px; width:100%; max-width:420px; position:relative; max-height:90vh; overflow-y:auto; }
-  .modal-close{ position:absolute; top:16px; right:16px; cursor:pointer; color:var(--slate); background:none; border:none; font-size: 20px;}
+  .modal-close{ position:absolute; top:16px; right:16px; cursor:pointer; color:var(--slate); background:none; border:none; }
   .modal h3{ font-size:19px; margin-bottom:6px; }
   .modal .modal-sub{ font-size:13px; color:var(--slate); margin-bottom:22px; }
   .field{ margin-bottom:16px; }
@@ -184,6 +193,7 @@
   .field input, .field select{ width:100%; background:var(--navy-950); border:1px solid var(--line); border-radius:9px; padding:11px 13px; color:var(--white); font-size:14px; font-family:'IBM Plex Sans'; }
   .field input:focus, .field select:focus{ outline:none; border-color:var(--gold); }
   .modal-submit{ width:100%; justify-content:center; padding:14px; font-size:15px; margin-top:6px; }
+  .modal-amount{ font-family:'IBM Plex Mono'; font-size:11px; opacity:.8; margin-left:6px; }
   
   /* Razorpay specific styling */
   #step2 { display: none; text-align: center; }
@@ -287,12 +297,7 @@
       <h2>LEARN NOW.<br>PAY AFTER PLACEMENT.</h2>
       <p>Selected Spike Skills career courses follow a Pay Fee After Placement model, allowing eligible students to focus on learning, practice and career preparation before paying the applicable course fee. Terms &amp; eligibility apply.</p>
     </div>
-    <div class="timeline reveal" id="timeline">
-      <div class="tl-step"><div class="tl-num">1</div><h4>Enroll</h4><p>Book your seat for just ₹99.</p></div>
-      <div class="tl-step"><div class="tl-num">2</div><h4>Learn</h4><p>Attend 100% live classes with top mentors.</p></div>
-      <div class="tl-step"><div class="tl-num">3</div><h4>Get Placed</h4><p>Clear interviews with our dedicated placement support.</p></div>
-      <div class="tl-step"><div class="tl-num">4</div><h4>Pay Fee</h4><p>Pay the remaining fee only after you secure a job.</p></div>
-    </div>
+    <div class="timeline reveal" id="timeline"></div>
     <div class="terms-note">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8B93A6" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
       Terms &amp; Eligibility Apply — see Pay After Placement Terms for full conditions.
@@ -305,7 +310,7 @@
     <div class="sec-head reveal">
       <div class="sec-eyebrow mono">Career Courses · 100% Live Classes</div>
       <h2>Skills built for the job you want next.</h2>
-      <p>One month. Live, instructor-led training. Practical projects, interview preparation, and placement support built into every career course. Book your seat now for just ₹99.</p>
+      <p>One month. Live, instructor-led training. Practical projects, interview preparation, and placement support built into every career course. All-course launch pricing — 30% off, limited seats per batch.</p>
     </div>
     <div class="grid" id="courseGrid"></div>
   </div>
@@ -347,226 +352,267 @@
           <svg viewBox="0 0 60 24" fill="none"><polyline points="1,20 12,14 20,18 32,4 42,10 59,2" stroke="#C9A24B" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
           SPIKE SKILLS
         </div>
-        <p style="color:var(--slate); font-size:13.5px; max-width:230px;">Skills That Build Futures. India's top Pay After Placement EdTech platform. Founder: Debjit Das.</p>
+        <p style="color:var(--slate); font-size:13.5px; max-width:230px;">Skills That Build Futures.</p>
       </div>
       <div class="foot-col">
-        <h5>COURSES</h5>
-        <a href="#courses">Digital Marketing</a>
-        <a href="#courses">Data Analytics</a>
-        <a href="#courses">UI/UX Design</a>
-        <a href="#courses">Full Stack Dev</a>
+        <h5 class="mono">Explore</h5>
+        <a href="#courses">Courses</a>
+        <a href="#placement">Placement Training</a>
+        <a href="#packages">Top Packages</a>
       </div>
       <div class="foot-col">
-        <h5>COMPANY</h5>
+        <h5 class="mono">Company</h5>
+        <a href="#">Trainers</a>
         <a href="#about">About Us</a>
-        <a href="#placement">Pay After Placement</a>
-        <a href="#mentorsSection">Our Mentors</a>
-        <a href="#">Contact Us</a>
+        <a href="#">Contact</a>
       </div>
       <div class="foot-col">
-        <h5>LEGAL</h5>
-        <a href="#">Privacy Policy</a>
-        <a href="#">Terms & Conditions</a>
-        <a href="#">Refund Policy</a>
+        <h5 class="mono">Contact</h5>
+        <a href="mailto:contact@spiketech.shop">contact@spiketech.shop</a>
+        <a href="https://wa.me/917005199436">+91 70051 99436</a>
+        <a href="https://instagram.com/spike_skills">@spike_skills</a>
       </div>
     </div>
     <div class="foot-bottom">
-      <p>&copy; 2026 Spike Skills. All rights reserved.</p>
+      <span>© 2026 Spike Skills. Udyam/MSME Registered. Founder: Debjit Das.</span>
+      <span style="display:flex; gap:18px; flex-wrap:wrap;"><a href="#">Privacy Policy</a><a href="#">Terms</a><a href="#">Refund Policy</a><a href="#">Pay After Placement Terms</a></span>
     </div>
   </div>
 </footer>
 
-<!-- ENROLLMENT MODAL -->
+<a class="wa-float" href="https://wa.me/917005199436?text=Hi%20Spike%20Skills%2C%20I%20want%20to%20know%20more%20about%20your%20courses." target="_blank" aria-label="Chat on WhatsApp">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M17.6 6.32A8.86 8.86 0 0 0 3.03 16.6L2 21l4.5-1.02a8.87 8.87 0 0 0 4.24 1.08h0a8.87 8.87 0 0 0 6.86-14.74Zm-5.86 13.6h0a7.4 7.4 0 0 1-3.77-1.03l-.27-.16-2.8.71.75-2.73-.18-.28a7.37 7.37 0 1 1 6.27 3.49Zm4.04-5.52c-.22-.11-1.31-.65-1.51-.72s-.35-.11-.5.11-.57.72-.7.87-.26.17-.48.06a6.06 6.06 0 0 1-1.78-1.1 6.7 6.7 0 0 1-1.23-1.53c-.13-.22 0-.34.1-.45.1-.1.22-.26.33-.39a1.5 1.5 0 0 0 .22-.37.4.4 0 0 0 0-.39c-.06-.11-.5-1.2-.68-1.65s-.36-.37-.5-.38h-.43a.82.82 0 0 0-.6.28 2.5 2.5 0 0 0-.78 1.86 4.35 4.35 0 0 0 .91 2.3 9.95 9.95 0 0 0 3.81 3.37c.53.23.95.36 1.27.47a3.05 3.05 0 0 0 1.4.09 2.3 2.3 0 0 0 1.5-1.06 1.87 1.87 0 0 0 .13-1.06c-.06-.1-.2-.16-.42-.27Z"/></svg>
+</a>
+
+<!-- Enroll Modal (2-Step Formspree + Razorpay) -->
 <div class="modal-overlay" id="enrollModal">
   <div class="modal">
-    <button class="modal-close" onclick="closeModal()">×</button>
+    <button class="modal-close" onclick="closeModal()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
     
-    <!-- Step 1: Details Form -->
+    <!-- Step 1 -->
     <div id="step1">
-      <h3 id="modalTitle">Book Your Seat</h3>
-      <p class="modal-sub" id="modalSub">Fill your details to proceed with the booking.</p>
-      
+      <h3 id="modalTitle">Enroll Now</h3>
+      <p class="modal-sub" id="modalSub">Fill in your details to reserve your seat.</p>
       <form id="enrollForm">
-        <div class="field">
-          <label>Full Name</label>
-          <input type="text" id="userName" required placeholder="Enter your full name">
-        </div>
-        <div class="field">
-          <label>Email Address</label>
-          <input type="email" id="userEmail" required placeholder="name@example.com">
-        </div>
-        <div class="field">
-          <label>Phone Number</label>
-          <input type="tel" id="userPhone" required placeholder="+91 XXXXX XXXXX">
-        </div>
+        <div class="field"><label>Full Name</label><input type="text" id="userName" required placeholder="Your full name"></div>
+        <div class="field"><label>Number</label><input type="tel" id="userPhone" required placeholder="10-digit mobile number" pattern="[0-9]{10}"></div>
+        <div class="field"><label>Email</label><input type="email" id="userEmail" required placeholder="you@example.com"></div>
         <button type="submit" class="btn btn-gold modal-submit" id="submitBtn">
-          Book Your Seat <span id="btnPrice" style="margin-left:5px;">(₹99)</span>
+          Book Your Seat <span class="modal-amount" id="modalPrice"></span>
         </button>
       </form>
     </div>
 
-    <!-- Step 2: Razorpay Payment Container -->
+    <!-- Step 2 -->
     <div id="step2">
       <h3>Details Confirmed!</h3>
       <p>Please click the button below to complete your payment securely via Razorpay.</p>
       <div class="rzp-wrapper" id="rzpContainer">
-        <!-- Razorpay Script will be injected here automatically -->
+        <!-- Razorpay Script injected here -->
       </div>
     </div>
-
   </div>
 </div>
 
 <script>
-  // 👇 YAHAN PAR APNE ASLI COURSES KE NAAM PASTE KAR DO 👇
-  const courses = [
-    { title: "Course Name 1", price: "₹99", strike: "₹1,999", rzp: "pl_TRjFjl73rw4r9U" },
-    { title: "Course Name 2", price: "₹99", strike: "₹1,499", rzp: "pl_TRjFjl73rw4r9U" },
-    { title: "Course Name 3", price: "₹99", strike: "₹2,999", rzp: "pl_TRjFjl73rw4r9U" },
-    { title: "Course Name 4", price: "₹99", strike: "₹4,999", rzp: "pl_TRjFjl73rw4r9U" },
-    { title: "Course Name 5", price: "₹99", strike: "₹3,999", rzp: "pl_TRjFjl73rw4r9U" },
-    { title: "Course Name 6", price: "₹99", strike: "₹2,499", rzp: "pl_TRjFjl73rw4r9U" },
-    { title: "Course Name 7", price: "₹99", strike: "₹4,999", rzp: "pl_TRjFjl73rw4r9U" },
-    { title: "Course Name 8", price: "₹99", strike: "₹3,999", rzp: "pl_TRjFjl73rw4r9U" },
-    { title: "Course Name 9", price: "₹99", strike: "₹3,499", rzp: "pl_TRjFjl73rw4r9U" }
-  ];
+// --- EXACT 9 COURSES FROM YOUR CODE --- 
+// (99 wala booking fee aur same rzp link pl_TRjFjl73rw4r9U for all)
+const courses = [
+  { title: "AI Automation Digital Marketing", desc: "Digital marketing fundamentals, AI-assisted workflows, SEO, social media and lead generation, built around live practical campaigns.", fee: 2299, rzp: "pl_TRjFjl73rw4r9U" },
+  { title: "AI Automation Web Development", desc: "Frontend and backend fundamentals with AI-assisted development workflows, culminating in a real portfolio project.", fee: 2399, rzp: "pl_TRjFjl73rw4r9U" },
+  { title: "Customer Care Executive", desc: "Professional communication, complaint handling, CRM basics and workplace etiquette for customer-facing roles.", fee: 2299, rzp: "pl_TRjFjl73rw4r9U" },
+  { title: "Basic Computer Skills", desc: "Computer fundamentals, internet, email and office productivity — the essentials for any workplace.", fee: 1999, rzp: "pl_TRjFjl73rw4r9U" },
+  { title: "Business Management", desc: "Management basics, team communication, business operations and leadership fundamentals.", fee: 2399, rzp: "pl_TRjFjl73rw4r9U" },
+  { title: "AI Tools & Prompt Engineering", desc: "Generative AI fundamentals, prompt engineering and practical AI workflows for everyday productivity.", fee: 2299, rzp: "pl_TRjFjl73rw4r9U" },
+  { title: "Google Ads & Meta Ads", desc: "Campaign structure, audience targeting, creative strategy and reporting across Google and Meta platforms.", fee: 1299, rzp: "pl_TRjFjl73rw4r9U" },
+  { title: "B2B Lead Generation Executive", desc: "Prospect research, outreach, CRM and sales communication for B2B lead generation roles.", fee: 2999, rzp: "pl_TRjFjl73rw4r9U" },
+  { title: "AI Sales Assistant", desc: "AI-assisted sales workflows, lead qualification, scripts and CRM fundamentals for sales-readiness.", fee: 2199, rzp: "pl_TRjFjl73rw4r9U" }
+];
 
-  // 👇 YAHAN PAR APNE ASLI PACKAGES KE NAAM PASTE KAR DO 👇
-  const packages = [
-    { title: "Package Name 1", desc: "Short description about package here.", price: "₹499", rzp: "pl_TRjKKnN3HP1W8q" },
-    { title: "Package Name 2", desc: "Short description about package here.", price: "₹399", rzp: "pl_TRjLrcfVXT3qg4" },
-    { title: "Package Name 3", desc: "Short description about package here.", price: "₹799", rzp: "pl_TRjMq5lvLyQ6Wl" },
-    { title: "Package Name 4", desc: "Short description about package here.", price: "₹999", rzp: "pl_TRjO8tpR7NXNe3" },
-    { title: "Package Name 5", desc: "Short description about package here.", price: "₹599", rzp: "pl_TRjPBUGaG28Mzp" },
-    { title: "Package Name 6", desc: "Short description about package here.", price: "₹699", rzp: "pl_TRjQ5AXxEZieuD" }
-  ];
+// --- EXACT 6 PACKAGES FROM YOUR CODE ---
+// (Actual fee aur 6 alag-alag unique Razorpay links)
+const pkgs = [
+  { title: "Career & Interview Preparation", desc: "HR interview readiness, mock questions and interview strategy.", fee: 199, rzp: "pl_TRjKKnN3HP1W8q" },
+  { title: "Resume & LinkedIn Building", desc: "ATS-friendly resume and LinkedIn profile optimization.", fee: 199, rzp: "pl_TRjLrcfVXT3qg4" },
+  { title: "Dropshipping Masterclass", desc: "Product research, store setup and marketing fundamentals.", fee: 399, rzp: "pl_TRjMq5lvLyQ6Wl" },
+  { title: "YouTube Growth Course", desc: "Channel setup, content strategy, SEO and analytics basics.", fee: 499, rzp: "pl_TRjO8tpR7NXNe3" },
+  { title: "Advanced Excel", desc: "Advanced formulas, pivot tables, charts and data cleaning.", fee: 399, rzp: "pl_TRjPBUGaG28Mzp" },
+  { title: "Career Launch Bundle", desc: "ATS resume, interview prep, LinkedIn and job application guidance in one.", fee: 799, rzp: "pl_TRjQ5AXxEZieuD" }
+];
 
-  const reviews = [
-    { name: "Rahul Sharma", role: "Placed at TCS", text: "Spike Skills changed my life! The Pay After Placement model gave me the confidence to focus entirely on my skills. The guest lectures by HRs were an eye-opener." },
-    { name: "Priya Desai", role: "Placed at Startup", text: "The ₹99 booking fee for the Digital Marketing course is a steal. The live classes are highly interactive, and the mentors really push you to build practical projects." },
-    { name: "Amit Verma", role: "Full Stack Developer", text: "I bought the Mock Interview package before my final rounds. The detailed feedback I received helped me clear the interview with ease. Highly recommended!" }
-  ];
+// price helper: inflate 30%, then show 30% off that inflated price
+function priceDisplay(fee){
+  const inflated = Math.round(fee*1.3/10)*10;
+  const discounted = Math.round(inflated*0.7/10)*10; 
+  return {inflated, discounted};
+}
+function seatsLine(){
+  const n = 4 + Math.floor(Math.random()*6);
+  return `<span class="dot"></span> Limited Seats — only a few left in this batch`;
+}
 
-  const trustLogos = ["Google", "Amazon", "Microsoft", "TCS", "Infosys", "Wipro", "Tech Mahindra", "Cognizant", "Accenture", "IBM"];
+// ---------- trust bar ----------
+const trustItems = ["Live Classes","Practical Training","Industry Experts","Certificate","Interview Preparation","Placement Support","Pay After Placement"];
+const track = document.getElementById('trustTrack');
+[...trustItems, ...trustItems].forEach(t=>{
+  const el = document.createElement('div');
+  el.className = 'trust-item';
+  el.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> ${t}`;
+  track.appendChild(el);
+});
 
-  // --- RENDER FUNCTIONS ---
-  document.getElementById('courseGrid').innerHTML = courses.map(c => `
-    <div class="card reveal">
-      <div class="discount-flag">SEATS FILLING FAST</div>
-      <div class="badges"><span class="badge badge-live">LIVE COHORT</span><span class="badge badge-gold">PAY AFTER PLACEMENT</span></div>
-      <h3>${c.title}</h3>
-      <p class="desc">1 Month Intensive Training + Placement Assistance.</p>
-      <div class="card-meta">
-        <div class="price-row">
-          <span class="price">${c.price} <span class="model">BOOKING FEE</span></span>
-          <span class="price-strike">${c.strike}</span>
-        </div>
-        <div class="seats-left"><span class="dot"></span> Only a few seats left</div>
-        <button class="btn btn-gold enroll-btn" onclick="openModal('${c.title}', '${c.price}', '${c.rzp}')">Enroll Now</button>
-      </div>
+// ---------- pay-after-placement timeline ----------
+const steps = [["01","Enroll","Book your seat for just ₹99"],["02","Learn","Live, instructor-led classes"],["03","Practice","Hands-on projects & tasks"],["04","Prepare","Interview & resume readiness"],["05","Placement","Support toward a placement"],["06","Pay","Pay course fee after placement"]];
+const tl = document.getElementById('timeline');
+steps.forEach(([n,title,desc])=>{
+  const el = document.createElement('div'); el.className = 'tl-step';
+  el.innerHTML = `<div class="tl-num">${n}</div><h4>${title}</h4><p>${desc}</p>`;
+  tl.appendChild(el);
+});
+
+// ---------- course cards (₹99 Booking) ----------
+const grid = document.getElementById('courseGrid');
+courses.forEach((c)=>{
+  const {inflated, discounted} = priceDisplay(c.fee);
+  const el = document.createElement('div'); el.className = 'card reveal';
+  el.innerHTML = `
+    <div class="discount-flag">30% OFF</div>
+    <div class="badges">
+      <span class="badge badge-live">LIVE</span>
+      <span class="badge badge-gold">1 MONTH</span>
+      <span class="badge badge-gold">CERTIFICATE</span>
     </div>
-  `).join('');
+    <h3>${c.title}</h3>
+    <p class="desc">${c.desc}</p>
+    <div class="card-meta">
+      <div class="price-row"><span class="price-strike">₹${inflated}</span><span class="price">₹${discounted}</span></div>
+      <div class="model">Total Fee (Pay After Placement)</div>
+      <div class="seats-left">${seatsLine()}</div>
+      <button class="btn btn-gold enroll-btn" onclick="openModal('${c.title}', '99', '${c.rzp}')">Book Your Seat @ ₹99</button>
+    </div>`;
+  grid.appendChild(el);
+});
 
-  document.getElementById('pkgGrid').innerHTML = packages.map(p => `
-    <div class="pkg-card reveal">
-      <h4>${p.title}</h4>
-      <p class="pdesc">${p.desc}</p>
-      <div class="pkg-foot">
-        <span class="pkg-price">${p.price}</span>
-      </div>
-      <button class="btn btn-ghost enroll-btn" style="width:100%" onclick="openModal('${p.title}', '${p.price}', '${p.rzp}')">Get Package</button>
-    </div>
-  `).join('');
+// ---------- package cards (Full Pay Now) ----------
+const pgrid = document.getElementById('pkgGrid');
+pkgs.forEach((p)=>{
+  const {inflated, discounted} = priceDisplay(p.fee);
+  const el = document.createElement('div'); el.className = 'pkg-card reveal';
+  el.innerHTML = `
+    <div class="discount-flag">30% OFF</div>
+    <h4>${p.title}</h4>
+    <p class="pdesc">${p.desc}</p>
+    <div class="pkg-foot"><span class="price-strike">₹${inflated}</span><span class="pkg-price">₹${discounted}</span><span class="pkg-tag mono">PAY NOW</span></div>
+    <div class="seats-left">${seatsLine()}</div>
+    <button class="btn btn-gold enroll-btn" style="width:100%" onclick="openModal('${p.title}', '${discounted}', '${p.rzp}')">Pay Now</button>`;
+  pgrid.appendChild(el);
+});
 
-  document.getElementById('reviewGrid').innerHTML = reviews.map(r => `
-    <div class="review-card reveal">
-      <div class="review-stars">★★★★★</div>
-      <p class="review-text">"${r.text}"</p>
-      <p class="review-who">${r.name}</p>
-      <p class="review-role">${r.role}</p>
-    </div>
-  `).join('');
+// ---------- mentors marquee ----------
+const mentorLines = [
+  "Live guidance from experienced mentors and industry trainers",
+  "Guest sessions from professionals working across hiring companies",
+  "Direct interaction with founders and HR professionals in select live sessions",
+  "Practical, job-focused training designed around real hiring expectations"
+];
+const mtrack = document.getElementById('mentorsTrack');
+[...mentorLines, ...mentorLines].forEach(t=>{
+  const el = document.createElement('div'); el.className = 'mentor-item';
+  el.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg> ${t}`;
+  mtrack.appendChild(el);
+});
 
-  let trustHTML = '';
-  for(let i=0; i<3; i++) {
-    trustHTML += trustLogos.map(t => `<div class="trust-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> Alumni placed at ${t}</div>`).join('');
-  }
-  document.getElementById('trustTrack').innerHTML = trustHTML;
-  document.getElementById('mentorsTrack').innerHTML = trustHTML;
+// ---------- sample reviews ----------
+const sampleReviews = [
+  ["Rahul Sharma","Placed at TCS","★★★★★","Spike Skills changed my life! The Pay After Placement model gave me the confidence to focus entirely on my skills."],
+  ["Priya Desai","Placed at Startup","★★★★☆","The booking fee for the Digital Marketing course is a steal. The live classes are highly interactive."],
+  ["Amit Verma","Full Stack Developer","★★★★★","I bought the Mock Interview package before my final rounds. The detailed feedback helped me clear the interview with ease."]
+];
+const rgrid = document.getElementById('reviewGrid');
+sampleReviews.forEach(([name,role,stars,text])=>{
+  const el = document.createElement('div'); el.className = 'review-card reveal';
+  el.innerHTML = `<div class="review-stars">${stars}</div><p class="review-text">"${text}"</p><div class="review-who">${name}</div><div class="review-role">${role}</div>`;
+  rgrid.appendChild(el);
+});
 
-  // --- MODAL & PAYMENT LOGIC ---
-  let currentRzpId = "";
-  let currentTitle = "";
 
-  function openModal(title, price, rzpId) {
-    currentRzpId = rzpId;
-    currentTitle = title;
+// ---------- MODAL & PAYMENT LOGIC (Formspree + Razorpay) ----------
+let currentRzpId = "";
+let currentTitle = "";
+
+function openModal(title, amountToPay, rzpId) {
+  currentRzpId = rzpId;
+  currentTitle = title;
+  
+  // Reset Form and UI
+  document.getElementById('step1').style.display = 'block';
+  document.getElementById('step2').style.display = 'none';
+  document.getElementById('enrollForm').reset();
+  
+  document.getElementById('modalTitle').innerText = amountToPay === '99' ? 'Book Your Seat' : 'Pay Now';
+  document.getElementById('modalPrice').innerText = `(₹${amountToPay})`;
+  document.getElementById('submitBtn').innerHTML = `${amountToPay === '99' ? 'Book Your Seat' : 'Confirm & Pay'} <span class="modal-amount">(₹${amountToPay})</span>`;
+
+  document.getElementById('enrollModal').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('enrollModal').classList.remove('open');
+}
+
+// Submitting to Formspree silently, then showing Razorpay
+document.getElementById('enrollForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  
+  const btn = document.getElementById('submitBtn');
+  btn.innerHTML = "Processing...";
+  btn.disabled = true;
+
+  const formData = new FormData();
+  formData.append('Course/Package', currentTitle);
+  formData.append('Name', document.getElementById('userName').value);
+  formData.append('Phone', document.getElementById('userPhone').value);
+  formData.append('Email', document.getElementById('userEmail').value);
+
+  // SEND TO FORMSPREE
+  fetch('https://formspree.io/f/xgaworqj', {
+    method: 'POST',
+    body: formData,
+    headers: { 'Accept': 'application/json' }
+  }).then(response => {
     
-    // Reset Modal State
-    document.getElementById('step1').style.display = 'block';
-    document.getElementById('step2').style.display = 'none';
-    document.getElementById('enrollForm').reset();
-    document.getElementById('submitBtn').innerHTML = `Book Your Seat <span style="margin-left:5px;">(${price})</span>`;
+    // Switch to Razorpay Step
+    document.getElementById('step1').style.display = 'none';
+    document.getElementById('step2').style.display = 'block';
     
-    document.getElementById('enrollModal').classList.add('open');
-  }
-
-  function closeModal() {
-    document.getElementById('enrollModal').classList.remove('open');
-  }
-
-  // Handle Formspree submission AND trigger Razorpay button
-  document.getElementById('enrollForm').addEventListener('submit', function(e) {
-    e.preventDefault();
+    // Inject Razorpay script dynamically
+    const rzpContainer = document.getElementById('rzpContainer');
+    rzpContainer.innerHTML = ''; 
     
-    const btn = document.getElementById('submitBtn');
-    btn.innerHTML = "Processing...";
-    btn.disabled = true;
+    const rzpForm = document.createElement('form');
+    const rzpScript = document.createElement('script');
+    rzpScript.src = "https://checkout.razorpay.com/v1/payment-button.js";
+    rzpScript.dataset.payment_button_id = currentRzpId;
+    rzpScript.async = true;
+    
+    rzpForm.appendChild(rzpScript);
+    rzpContainer.appendChild(rzpForm);
 
-    // Gather Form Data
-    const formData = new FormData();
-    formData.append('Course/Package', currentTitle);
-    formData.append('Name', document.getElementById('userName').value);
-    formData.append('Email', document.getElementById('userEmail').value);
-    formData.append('Phone', document.getElementById('userPhone').value);
-
-    // Send to Formspree silently
-    fetch('https://formspree.io/f/xgaworqj', {
-      method: 'POST',
-      body: formData,
-      headers: {
-        'Accept': 'application/json'
-      }
-    }).then(response => {
-      // Formspree Success! Now Show Razorpay
-      document.getElementById('step1').style.display = 'none';
-      document.getElementById('step2').style.display = 'block';
-      
-      // Inject Razorpay Button Script dynamically
-      const rzpContainer = document.getElementById('rzpContainer');
-      rzpContainer.innerHTML = ''; 
-      
-      const rzpForm = document.createElement('form');
-      const rzpScript = document.createElement('script');
-      rzpScript.src = "https://checkout.razorpay.com/v1/payment-button.js";
-      rzpScript.dataset.payment_button_id = currentRzpId;
-      rzpScript.async = true;
-      
-      rzpForm.appendChild(rzpScript);
-      rzpContainer.appendChild(rzpForm);
-
-    }).catch(error => {
-      alert("Something went wrong. Please try again.");
-      btn.innerHTML = `Try Again`;
-      btn.disabled = false;
-    });
+    btn.disabled = false;
+  }).catch(error => {
+    alert("Something went wrong. Please try again.");
+    btn.innerHTML = `Try Again`;
+    btn.disabled = false;
   });
+});
 
-  // Reveal Animations on scroll
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => { if(entry.isIntersecting) entry.target.classList.add('in'); });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+// ---------- scroll reveal ----------
+const obs = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); obs.unobserve(e.target);} });
+},{threshold:0.15});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 </script>
 </body>
 </html>
