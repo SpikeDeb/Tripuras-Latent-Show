@@ -1,467 +1,584 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Tripura's latent show — Contestant Entry</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spike Skills — Skills That Build Futures</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg: #1B1310;
-    --bg-soft: #241A15;
-    --card: #2A1F19;
-    --chili: #E6432B;
-    --chili-dark: #B92F1C;
-    --turmeric: #F0A73B;
-    --cream: #F7ECDC;
-    --muted: #B7A392;
-    --line: rgba(247,236,220,0.12);
-    --leaf: #6E9152;
-    --radius: 18px;
+    --navy-950:#05080D;
+    --navy-900:#0A1220;
+    --navy-850:#0E1A30;
+    --navy-800:#122140;
+    --line: rgba(201,162,75,0.16);
+    --gold:#C9A24B;
+    --gold-bright:#E8C97A;
+    --white:#F6F4EE;
+    --slate:#8B93A6;
+    --slate-dim:#5C6478;
+    --live:#4ADE80;
+    --radius: 14px;
   }
-  *{box-sizing:border-box;}
+  *{box-sizing:border-box; margin:0; padding:0;}
   html{scroll-behavior:smooth;}
   body{
-    margin:0;
-    background:var(--bg);
-    color:var(--cream);
-    font-family:'Inter',sans-serif;
-    line-height:1.5;
+    background:var(--navy-950);
+    color:var(--white);
+    font-family:'IBM Plex Sans', sans-serif;
     -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
   }
-  @media (prefers-reduced-motion: reduce){
-    *{animation:none !important; transition:none !important;}
-  }
-  h1,h2,h3,.display{
-    font-family:'Baloo 2',sans-serif;
-    font-weight:800;
-    letter-spacing:0.2px;
-  }
-  a{color:inherit;}
-  .wrap{max-width:640px; margin:0 auto; padding:0 22px;}
+  h1,h2,h3,.display{ font-family:'Space Grotesk', sans-serif; letter-spacing:-0.01em; }
+  .mono{ font-family:'IBM Plex Mono', monospace; letter-spacing:0.06em; text-transform:uppercase; }
+  a{color:inherit; text-decoration:none;}
+  img{max-width:100%; display:block;}
+  .wrap{ max-width:1180px; margin:0 auto; padding:0 24px; }
+  ::selection{ background:var(--gold); color:var(--navy-950); }
+  button{ font-family:inherit; cursor: pointer; border: none;}
 
-  /* ---------- Ambient background texture ---------- */
-  .bg-glow{
-    position:fixed; inset:0; z-index:0; pointer-events:none;
-    background:
-      radial-gradient(600px 400px at 15% -5%, rgba(230,67,43,0.25), transparent 60%),
-      radial-gradient(500px 380px at 100% 10%, rgba(240,167,59,0.16), transparent 55%);
-  }
+  .spike-mark{ display:inline-flex; align-items:center; gap:8px; }
+  .spike-mark svg{ height:22px; width:auto; }
 
-  /* ---------- Floating spice particles ---------- */
-  .particle{
-    position:absolute; border-radius:50%;
-    filter: blur(0.5px);
-    opacity:0.55;
-    animation: drift 9s ease-in-out infinite;
-  }
-  @keyframes drift{
-    0%,100%{ transform: translateY(0) translateX(0) rotate(0deg); }
-    50%{ transform: translateY(-16px) translateX(6px) rotate(8deg); }
-  }
+  header{ position:sticky; top:0; z-index:50; background:rgba(5,8,13,0.78); backdrop-filter: blur(14px); border-bottom:1px solid var(--line); }
+  nav{ display:flex; align-items:center; justify-content:space-between; padding:16px 24px; max-width:1180px; margin:0 auto; }
+  .logo{ display:flex; align-items:center; gap:10px; font-size:19px; font-weight:700; }
+  .logo .tick{ color:var(--gold); }
+  .navlinks{ display:flex; gap:30px; font-size:14.5px; color:var(--slate); }
+  .navlinks a:hover{ color:var(--white); }
+  .navcta{ display:flex; align-items:center; gap:18px; }
+  .btn{ font-family:'IBM Plex Sans'; font-size:14px; font-weight:600; padding:10px 20px; border-radius:999px; cursor:pointer; border:1px solid transparent; display:inline-flex; align-items:center; gap:8px; transition:.25s ease; }
+  .btn-gold{ background:linear-gradient(180deg, var(--gold-bright), var(--gold)); color:#1A1204; }
+  .btn-gold:hover{ transform:translateY(-1px); box-shadow:0 8px 24px -8px rgba(201,162,75,0.55); }
+  .btn-ghost{ border-color:rgba(246,244,238,0.22); color:var(--white); }
+  .btn-ghost:hover{ border-color:var(--gold); color:var(--gold-bright); }
+  @media(max-width:860px){ .navlinks{ display:none; } .navcta .btn-ghost{ display:none; } }
 
-  /* ---------- Hero ---------- */
-  .hero{
-    position:relative; z-index:1;
-    padding:56px 0 34px;
-    overflow:hidden;
-  }
-  .eyebrow{
-    display:inline-flex; align-items:center; gap:8px;
-    font-family:'Inter',sans-serif; font-weight:600; font-size:12.5px;
-    letter-spacing:1.4px; text-transform:uppercase;
-    color:var(--turmeric);
-    background:rgba(240,167,59,0.1);
-    border:1px solid rgba(240,167,59,0.35);
-    padding:6px 14px; border-radius:999px;
-  }
-  .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--chili);}
-  .title{
-    font-size:clamp(38px, 9vw, 54px);
-    line-height:0.98;
-    margin:20px 0 6px;
-    color:var(--cream);
-  }
-  .title span{color:var(--chili);}
-  .subtitle{
-    font-size:16.5px; color:var(--muted); max-width:480px; margin:0 0 26px;
-  }
-  .stat-row{
-    display:flex; gap:10px; flex-wrap:wrap; margin-bottom:6px;
-  }
-  .stat-chip{
-    background:var(--card); border:1px solid var(--line);
-    border-radius:12px; padding:10px 14px;
-    font-size:13px; color:var(--cream); font-weight:600;
-    display:flex; align-items:center; gap:8px;
-  }
-  .stat-chip b{color:var(--turmeric); font-family:'Baloo 2',sans-serif; font-size:16px;}
+  .hero{ position:relative; padding:100px 0 70px; overflow:hidden; }
+  .hero::before{ content:''; position:absolute; inset:0;
+    background: radial-gradient(ellipse 700px 420px at 78% -8%, rgba(201,162,75,0.16), transparent 60%),
+      radial-gradient(ellipse 500px 500px at -10% 60%, rgba(201,162,75,0.08), transparent 60%);
+    pointer-events:none; }
+  .hero-grid{ position:relative; display:grid; grid-template-columns:1.1fr 0.9fr; gap:56px; align-items:center; }
+  @media(max-width:900px){ .hero-grid{ grid-template-columns:1fr; } }
+  .eyebrow{ color:var(--gold); font-size:12px; margin-bottom:18px; display:flex; align-items:center; gap:10px; }
+  .eyebrow .dot{ width:6px; height:6px; border-radius:50%; background:var(--live); box-shadow:0 0 0 4px rgba(74,222,128,0.15); }
+  .hero h1{ font-size:clamp(38px, 6vw, 66px); line-height:1.02; font-weight:700; }
+  .hero h1 span{ color:var(--gold); }
+  .hero p.sub{ margin-top:22px; font-size:17.5px; line-height:1.6; color:var(--slate); max-width:520px; }
+  .hero-ctas{ display:flex; gap:14px; margin-top:34px; flex-wrap:wrap; }
+  .btn-lg{ padding:14px 26px; font-size:15px; border-radius:12px; }
+  .hero-visual{ position:relative; }
+  .panel{ background:linear-gradient(180deg, var(--navy-850), var(--navy-900)); border:1px solid var(--line); border-radius:20px; padding:26px; box-shadow:0 30px 60px -30px rgba(0,0,0,0.6); }
+  .panel-head{ display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; }
+  .panel-head .mono{ font-size:11px; color:var(--slate); }
+  .live-tag{ display:flex; align-items:center; gap:6px; font-size:11px; color:var(--live); }
+  .live-tag .dot{ width:6px; height:6px; border-radius:50%; background:var(--live); animation:pulse 1.8s infinite; }
+  @keyframes pulse{ 0%,100%{ opacity:1 } 50%{ opacity:.35 } }
+  .spike-chart{ width:100%; height:150px; }
+  .skillrow{ display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-top:1px solid var(--line); font-size:13.5px; }
+  .skillrow .badge{ font-size:10px; padding:3px 9px; border-radius:999px; border:1px solid rgba(201,162,75,0.4); color:var(--gold-bright); }
 
-  /* ---------- How it works strip ---------- */
-  .how{
-    position:relative; z-index:1;
-    background:var(--bg-soft);
-    border-top:1px solid var(--line);
-    border-bottom:1px solid var(--line);
-    padding:26px 0;
-  }
-  .how-title{
-    font-size:12.5px; text-transform:uppercase; letter-spacing:1.4px;
-    color:var(--muted); font-weight:700; margin:0 0 16px;
-  }
-  .how-steps{ display:flex; flex-direction:column; gap:14px; }
-  .how-step{ display:flex; gap:14px; align-items:flex-start; }
-  .how-num{
-    flex:none; width:32px; height:32px; border-radius:9px;
-    background:var(--chili); color:#fff;
-    display:flex; align-items:center; justify-content:center;
-    font-family:'Baloo 2',sans-serif; font-weight:700; font-size:14px;
-  }
-  .how-step p{margin:0; font-size:14px; color:var(--cream);}
-  .how-step p b{color:var(--turmeric);}
+  .trust{ border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:22px 0; overflow:hidden; }
+  .trust-track{ display:flex; gap:48px; width:max-content; animation:scroll 26s linear infinite; }
+  .trust:hover .trust-track{ animation-play-state:paused; }
+  @keyframes scroll{ from{ transform:translateX(0);} to{ transform:translateX(-50%);} }
+  .trust-item{ display:flex; align-items:center; gap:10px; font-size:14px; color:var(--slate); white-space:nowrap; }
+  .trust-item svg{ color:var(--gold); }
 
-  /* ---------- Form section ---------- */
-  .form-section{ position:relative; z-index:1; padding:40px 0 70px; }
-  .form-head{ margin-bottom:24px; }
-  .form-head h2{ font-size:26px; margin:0 0 6px; color:var(--cream); }
-  .form-head p{ margin:0; color:var(--muted); font-size:14px; }
+  section{ padding:96px 0; }
+  .sec-head{ max-width:640px; margin-bottom:52px; }
+  .sec-eyebrow{ color:var(--gold); font-size:12px; margin-bottom:14px; }
+  .sec-head h2{ font-size:clamp(28px,4vw,42px); font-weight:700; line-height:1.1; }
+  .sec-head p{ margin-top:14px; color:var(--slate); font-size:16px; line-height:1.6; }
 
-  .field{ margin-bottom:20px; }
-  .field label{
-    display:block; font-size:13px; font-weight:600;
-    color:var(--turmeric); margin-bottom:8px; letter-spacing:0.2px;
-  }
-  .field .hint{
-    display:block; font-size:12px; color:var(--muted); margin-top:6px; font-weight:400;
-  }
-  input[type=text], input[type=tel], input[type=url], textarea{
-    width:100%; background:var(--card); border:1.5px solid var(--line);
-    color:var(--cream); border-radius:12px; padding:13px 14px;
-    font-family:'Inter',sans-serif; font-size:15px;
-    transition: border-color 0.15s ease, background 0.15s ease;
-  }
-  input::placeholder, textarea::placeholder{ color:#7C6C5D; }
-  input:focus, textarea:focus{
-    outline:none; border-color:var(--chili); background:#2E2119;
-  }
-  .insta-field{ position:relative; }
-  .insta-field .at{
-    position:absolute; left:14px; top:50%; transform:translateY(-50%);
-    color:var(--muted); font-size:15px; pointer-events:none;
-  }
-  .insta-field input{ padding-left:28px; }
+  /* ABOUT SECTION STYLES */
+  .about-section { background:var(--navy-900); border-top:1px solid var(--line); padding: 70px 0; }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+  @media(max-width:900px){ .about-grid{ grid-template-columns:1fr; } }
+  .about-content h2 { font-size: 32px; margin-bottom: 16px; color: var(--gold-bright); }
+  .about-content p { color: var(--slate); font-size: 15px; line-height: 1.7; margin-bottom: 16px; }
+  .about-features { margin-top: 24px; display: flex; flex-direction: column; gap: 12px; }
+  .a-feat { display: flex; align-items: center; gap: 10px; font-size: 14.5px; font-weight: 500; color: var(--white); }
+  .a-feat svg { color: var(--live); width: 18px; height: 18px; }
 
-  textarea{ min-height:110px; resize:vertical; font-family:'Inter',sans-serif; }
-  .counter{ text-align:right; font-size:11.5px; color:var(--muted); margin-top:6px; }
+  .payafter{ background:var(--navy-950); border-top:1px solid var(--line); border-bottom:1px solid var(--line); position:relative; }
+  .timeline{ display:flex; gap:0; overflow-x:auto; padding-bottom:8px; margin-top:10px; }
+  .tl-step{ flex:1; min-width:150px; position:relative; padding:26px 18px 20px; }
+  .tl-step:not(:last-child)::after{ content:''; position:absolute; top:38px; right:-2px; width:100%; height:1px;
+    background:repeating-linear-gradient(90deg, var(--gold) 0 6px, transparent 6px 12px); opacity:.5; }
+  .tl-num{ width:34px; height:34px; border-radius:50%; border:1px solid var(--gold); color:var(--gold-bright);
+    display:flex; align-items:center; justify-content:center; font-family:'IBM Plex Mono'; font-size:13px; margin-bottom:14px; background:var(--navy-950); position:relative; z-index:1; }
+  .tl-step h4{ font-size:14.5px; font-weight:600; margin-bottom:4px; }
+  .tl-step p{ font-size:12.5px; color:var(--slate-dim); }
+  .terms-note{ margin-top:26px; font-size:12.5px; color:var(--slate-dim); display:flex; align-items:center; gap:8px; }
 
-  /* Chip select for content type */
-  .chip-grid{ display:flex; flex-wrap:wrap; gap:9px; }
-  .chip{
-    border:1.5px solid var(--line); background:var(--card);
-    color:var(--cream); padding:10px 16px; border-radius:999px;
-    font-size:13.5px; font-weight:600; cursor:pointer;
-    display:flex; align-items:center; gap:7px;
-    transition: all 0.15s ease;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .chip .ic{ font-size:15px; }
-  .chip.active{
-    background:linear-gradient(135deg, var(--chili), var(--chili-dark));
-    border-color:var(--chili);
-    color:#fff;
-  }
+  .grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
+  @media(max-width:920px){ .grid{ grid-template-columns:repeat(2,1fr); } }
+  @media(max-width:620px){ .grid{ grid-template-columns:1fr; } }
+  .card{ background:linear-gradient(180deg, var(--navy-850), var(--navy-900)); border:1px solid var(--line); border-radius:var(--radius); padding:22px; transition:.3s ease; display:flex; flex-direction:column; height:100%; position:relative; }
+  .card:hover{ transform:translateY(-4px); border-color:rgba(201,162,75,0.5); box-shadow:0 24px 40px -24px rgba(0,0,0,0.55); }
+  .discount-flag{ position:absolute; top:-1px; right:18px; background:var(--gold); color:#1A1204; font-family:'IBM Plex Mono'; font-size:10.5px; font-weight:600; padding:5px 10px; border-radius:0 0 8px 8px; }
+  .badges{ display:flex; gap:6px; flex-wrap:wrap; margin-bottom:14px; }
+  .badge{ font-size:10px; padding:4px 9px; border-radius:999px; font-family:'IBM Plex Mono'; }
+  .badge-live{ background:rgba(74,222,128,0.12); color:var(--live); border:1px solid rgba(74,222,128,0.3); }
+  .badge-gold{ background:rgba(201,162,75,0.12); color:var(--gold-bright); border:1px solid rgba(201,162,75,0.3); }
+  .card h3{ font-size:18px; font-weight:600; margin-bottom:8px; }
+  .card p.desc{ font-size:13.5px; color:var(--slate); line-height:1.55; flex-grow:1; }
+  .card-meta{ margin-top:18px; padding-top:16px; border-top:1px solid var(--line); }
+  .price-row{ display:flex; align-items:baseline; gap:9px; flex-wrap:wrap; }
+  .price{ font-family:'Space Grotesk'; font-size:21px; font-weight:700; }
+  .price-strike{ font-family:'IBM Plex Mono'; font-size:12.5px; color:var(--slate-dim); text-decoration:line-through; }
+  .price .model{ display:block; font-family:'IBM Plex Mono'; font-size:9.5px; color:var(--gold); letter-spacing:.06em; text-transform:uppercase; margin-top:4px; }
+  .seats-left{ font-size:11.5px; color:#F0A24A; margin-top:8px; display:flex; align-items:center; gap:6px; }
+  .seats-left .dot{ width:5px; height:5px; border-radius:50%; background:#F0A24A; }
+  .enroll-btn{ width:100%; margin-top:14px; justify-content:center; }
 
-  fieldset{ border:none; padding:0; margin:0; }
+  .pkg-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+  @media(max-width:920px){ .pkg-grid{ grid-template-columns:repeat(2,1fr); } }
+  @media(max-width:620px){ .pkg-grid{ grid-template-columns:1fr; } }
+  .pkg-card{ background:var(--navy-900); border:1px solid var(--line); border-radius:var(--radius); padding:20px; position:relative; }
+  .pkg-card h4{ font-size:15.5px; font-weight:600; margin-bottom:8px; line-height:1.3; }
+  .pkg-card p.pdesc{ font-size:12.5px; color:var(--slate-dim); margin-bottom:14px; }
+  .pkg-foot{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:6px; }
+  .pkg-price{ font-family:'Space Grotesk'; font-weight:700; font-size:17px; }
+  .pkg-tag{ font-family:'IBM Plex Mono'; font-size:9.5px; color:var(--live); }
+  .pkg-card .seats-left{ margin-bottom:12px; }
 
-  .consent{
-    display:flex; gap:11px; align-items:flex-start;
-    background:var(--card); border:1px solid var(--line);
-    border-radius:12px; padding:14px 16px; margin-bottom:24px;
-  }
-  .consent input{ margin-top:3px; width:17px; height:17px; accent-color:var(--chili); flex:none; }
-  .consent label{ font-size:13px; color:var(--muted); line-height:1.5; }
+  /* mentors marquee */
+  .mentors{ background:var(--navy-900); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+  .mentors-track{ display:flex; gap:60px; width:max-content; animation:scroll 34s linear infinite; padding:6px 0; }
+  .mentors:hover .mentors-track{ animation-play-state:paused; }
+  .mentor-item{ font-size:14.5px; color:var(--slate); white-space:nowrap; display:flex; align-items:center; gap:10px; }
+  .mentor-item svg{ color:var(--gold); flex-shrink:0; }
 
-  .submit-btn{
-    width:100%; border:none; border-radius:14px;
-    background:linear-gradient(135deg, var(--chili), var(--chili-dark));
-    color:#fff; font-family:'Baloo 2',sans-serif; font-weight:700; font-size:17px;
-    padding:16px; cursor:pointer;
-    box-shadow: 0 10px 24px -8px rgba(230,67,43,0.55);
-    transition: transform 0.12s ease, box-shadow 0.12s ease;
-  }
-  .submit-btn:active{ transform: scale(0.98); }
-  .submit-btn:disabled{ opacity:0.6; cursor:not-allowed; }
-  .error-msg{
-    color:#F0A73B; font-size:12.5px; margin-top:8px; display:none;
-  }
+  /* reviews */
+  .review-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+  @media(max-width:920px){ .review-grid{ grid-template-columns:1fr 1fr; } }
+  @media(max-width:620px){ .review-grid{ grid-template-columns:1fr; } }
+  .review-card{ background:var(--navy-900); border:1px solid var(--line); border-radius:var(--radius); padding:22px; }
+  .review-stars{ color:var(--gold); font-size:14px; margin-bottom:12px; letter-spacing:2px; }
+  .review-text{ font-size:13.5px; color:var(--slate); line-height:1.6; margin-bottom:16px; }
+  .review-who{ font-size:13px; font-weight:600; }
+  .review-role{ font-size:11.5px; color:var(--slate-dim); }
+  .review-note{ font-size:11px; color:var(--slate-dim); margin-top:36px; text-align:center; }
+  .feedback-box{ margin-top:36px; background:var(--navy-900); border:1px solid var(--line); border-radius:var(--radius); padding:26px; display:flex; justify-content:space-between; align-items:center; gap:20px; flex-wrap:wrap; }
+  .feedback-box h4{ font-size:16px; margin-bottom:6px; }
+  .feedback-box p{ font-size:13px; color:var(--slate); }
 
-  /* ---------- Success state ---------- */
-  .success-screen{
-    display:none; position:relative; z-index:1;
-    padding:80px 0 90px; text-align:center;
-  }
-  .success-badge{
-    width:74px; height:74px; border-radius:50%;
-    background:var(--leaf); margin:0 auto 22px;
-    display:flex; align-items:center; justify-content:center;
-    font-size:34px;
-  }
-  .success-screen h2{ font-size:26px; margin:0 0 10px; }
-  .success-screen p{ color:var(--muted); font-size:14.5px; max-width:400px; margin:0 auto 26px; }
-  .success-code{
-    display:inline-block; background:var(--card); border:1px solid var(--line);
-    border-radius:10px; padding:10px 18px; font-family:'Baloo 2',sans-serif;
-    font-size:15px; color:var(--turmeric); letter-spacing:1px;
-  }
+  footer{ background:var(--navy-900); border-top:1px solid var(--line); padding:64px 0 30px; }
+  .foot-grid{ display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:40px; }
+  @media(max-width:760px){ .foot-grid{ grid-template-columns:1fr 1fr; } }
+  .foot-col h5{ font-size:12px; color:var(--gold); margin-bottom:16px; }
+  .foot-col a, .foot-col p{ display:block; font-size:13.5px; color:var(--slate); margin-bottom:11px; }
+  .foot-col a:hover{ color:var(--white); }
+  .foot-bottom{ margin-top:50px; padding-top:24px; border-top:1px solid var(--line); display:flex; justify-content:space-between; flex-wrap:wrap; gap:14px; font-size:12.5px; color:var(--slate-dim); }
 
-  /* ---------- Footer ---------- */
-  footer{
-    position:relative; z-index:1;
-    border-top:1px solid var(--line);
-    padding:22px 0 32px;
-    text-align:center;
-  }
-  footer p{ font-size:12px; color:var(--muted); margin:0 0 10px; }
-  .admin-link{
-    font-size:11.5px; color:#7C6C5D; text-decoration:underline; cursor:pointer;
-    background:none; border:none; font-family:'Inter',sans-serif;
-  }
+  /* modal */
+  .modal-overlay{ position:fixed; inset:0; background:rgba(5,8,13,0.72); backdrop-filter:blur(6px); z-index:100; display:none; align-items:center; justify-content:center; padding:20px; }
+  .modal-overlay.open{ display:flex; }
+  .modal{ background:linear-gradient(180deg, var(--navy-850), var(--navy-900)); border:1px solid var(--line); border-radius:18px; padding:30px; width:100%; max-width:420px; position:relative; max-height:90vh; overflow-y:auto; }
+  .modal-close{ position:absolute; top:16px; right:16px; cursor:pointer; color:var(--slate); background:none; border:none; font-size: 20px;}
+  .modal h3{ font-size:19px; margin-bottom:6px; }
+  .modal .modal-sub{ font-size:13px; color:var(--slate); margin-bottom:22px; }
+  .field{ margin-bottom:16px; }
+  .field label{ display:block; font-size:12px; color:var(--slate); margin-bottom:6px; font-family:'IBM Plex Mono'; text-transform:uppercase; letter-spacing:.05em; }
+  .field input, .field select{ width:100%; background:var(--navy-950); border:1px solid var(--line); border-radius:9px; padding:11px 13px; color:var(--white); font-size:14px; font-family:'IBM Plex Sans'; }
+  .field input:focus, .field select:focus{ outline:none; border-color:var(--gold); }
+  .modal-submit{ width:100%; justify-content:center; padding:14px; font-size:15px; margin-top:6px; }
+  
+  /* Razorpay specific styling */
+  #step2 { display: none; text-align: center; }
+  #step2 p { color: var(--live); margin-bottom: 20px; font-size: 15px;}
+  .rzp-wrapper { display: flex; justify-content: center; margin-top: 15px; }
 
-  /* ---------- Admin panel ---------- */
-  .admin-panel{
-    display:none; position:relative; z-index:1;
-    background:var(--bg-soft); border-top:1px solid var(--line);
-    padding:30px 0 50px;
-  }
-  .admin-panel h3{ font-size:18px; margin:0 0 4px; }
-  .admin-panel .sub{ font-size:12.5px; color:var(--muted); margin-bottom:18px; }
-  .entry{
-    background:var(--card); border:1px solid var(--line); border-radius:12px;
-    padding:14px 16px; margin-bottom:12px; font-size:13px;
-  }
-  .entry .row{ display:flex; justify-content:space-between; gap:10px; margin-bottom:4px; }
-  .entry .name{ font-weight:700; color:var(--turmeric); }
-  .entry .tag{ font-size:11px; background:var(--chili); color:#fff; padding:3px 9px; border-radius:999px; }
-  .entry .meta{ color:var(--muted); font-size:12px; margin-top:6px; }
-  .entry a{ color:var(--turmeric); word-break:break-all; }
-  .empty-note{ color:var(--muted); font-size:13px; }
 </style>
 </head>
 <body>
 
-<div class="bg-glow"></div>
-<div id="particles"></div>
+<header>
+  <nav>
+    <div class="logo spike-mark">
+      <svg viewBox="0 0 60 24" fill="none"><polyline points="1,20 12,14 20,18 32,4 42,10 59,2" stroke="#C9A24B" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      SPIKE <span class="tick">SKILLS</span>
+    </div>
+    <div class="navlinks">
+      <a href="#about">About</a>
+      <a href="#courses">Courses</a>
+      <a href="#placement">Placement Training</a>
+      <a href="#packages">Top Packages</a>
+    </div>
+    <div class="navcta">
+      <a href="#courses" class="btn btn-gold">Get Started</a>
+    </div>
+  </nav>
+</header>
 
-<!-- HERO -->
 <section class="hero">
-  <div class="wrap">
-    <span class="eyebrow"><span class="dot"></span> Season 1 · Open Casting</span>
-    <h1 class="title">Tripura's<br><span>latent show</span></h1>
-    <p class="subtitle">3 contestants. 30 seconds each. One 90-second reel. Junta hi judge, junta hi jury — vote decides who wins.</p>
-    <div class="stat-row">
-      <div class="stat-chip"><b>30s</b> per contestant</div>
-      <div class="stat-chip"><b>Insta</b> only</div>
-      <div class="stat-chip"><b>Junta</b> votes</div>
-    </div>
-  </div>
-</section>
-
-<!-- HOW IT WORKS -->
-<section class="how">
-  <div class="wrap">
-    <p class="how-title">How your entry gets on the show</p>
-    <div class="how-steps">
-      <div class="how-step">
-        <div class="how-num">1</div>
-        <p>Fill the form below with your details and a <b>link to your 30-second clip</b> (video or voice note).</p>
-      </div>
-      <div class="how-step">
-        <div class="how-num">2</div>
-        <p>Best entries get <b>shortlisted</b> and paired with 2 other contestants for a weekly 90-second reel.</p>
-      </div>
-      <div class="how-step">
-        <div class="how-num">3</div>
-        <p>The reel goes live on Instagram — <b>junta votes</b> in the comments, and the winner gets featured + a prize.</p>
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow mono"><span class="dot"></span> Live cohorts open for enrollment</div>
+      <h1>LEARN TODAY.<br><span>LEAD TOMORROW.</span></h1>
+      <p class="sub">Build practical, in-demand skills with live training from mentors and industry experts — and become genuinely job-ready.</p>
+      <div class="hero-ctas">
+        <a href="#courses" class="btn btn-gold btn-lg">Explore Courses</a>
+        <a href="#placement" class="btn btn-ghost btn-lg">Get Job Ready</a>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- FORM -->
-<section class="form-section" id="form-section">
-  <div class="wrap">
-    <div class="form-head">
-      <h2>Enter the Battle</h2>
-      <p>Takes about 2 minutes. Keep your Instagram profile public so we can verify your entry.</p>
-    </div>
-
-    <form id="entryForm" action="https://formspree.io/f/xgaworqj" method="POST" novalidate>
-      <div class="field">
-        <label for="fullName">Full name</label>
-        <input type="text" id="fullName" name="FullName" placeholder="e.g. Rintu Debbarma" required />
-      </div>
-
-      <div class="field">
-        <label for="city">City / town in Tripura</label>
-        <input type="text" id="city" name="City" placeholder="e.g. Agartala, Udaipur, Dharmanagar…" required />
-      </div>
-
-      <div class="field">
-        <label for="insta">Instagram handle</label>
-        <div class="insta-field">
-          <span class="at">@</span>
-          <input type="text" id="insta" name="Instagram" placeholder="yourusername" required />
+    <div class="hero-visual reveal">
+      <div class="panel">
+        <div class="panel-head">
+          <span class="mono">Skill trajectory</span>
+          <span class="live-tag"><span class="dot"></span> LIVE</span>
         </div>
-        <span class="hint">This is where we'll tag you if you're shortlisted.</span>
+        <svg class="spike-chart" viewBox="0 0 400 150" preserveAspectRatio="none">
+          <defs><linearGradient id="fillgrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#C9A24B" stop-opacity="0.35"/>
+            <stop offset="100%" stop-color="#C9A24B" stop-opacity="0"/>
+          </linearGradient></defs>
+          <polyline points="0,130 40,120 70,128 100,90 140,100 170,40 210,60 250,20 290,45 330,15 400,10" fill="none" stroke="#E8C97A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <polygon points="0,130 40,120 70,128 100,90 140,100 170,40 210,60 250,20 290,45 330,15 400,10 400,150 0,150" fill="url(#fillgrad)"/>
+        </svg>
+        <div class="skillrow"><span>AI Automation Digital Marketing</span><span class="badge">1 MONTH</span></div>
+        <div class="skillrow"><span>AI Tools & Prompt Engineering</span><span class="badge">CERTIFICATE</span></div>
+        <div class="skillrow"><span>Business Management</span><span class="badge">LIVE</span></div>
       </div>
-
-      <div class="field">
-        <label for="whatsapp">WhatsApp number</label>
-        <input type="tel" id="whatsapp" name="WhatsApp" placeholder="10-digit mobile number" required />
-      </div>
-
-      <div class="field">
-        <label>What kind of entertainer are you?</label>
-        <fieldset class="chip-grid" id="contentType">
-          <button type="button" class="chip" data-value="Comedy"><span class="ic">😂</span> Comedy</button>
-          <button type="button" class="chip" data-value="Shayari"><span class="ic">✍️</span> Shayari</button>
-          <button type="button" class="chip" data-value="Talent"><span class="ic">🎤</span> Talent</button>
-          <button type="button" class="chip" data-value="Story"><span class="ic">📖</span> Real Story</button>
-          <button type="button" class="chip" data-value="Wildcard"><span class="ic">🌶️</span> Wildcard</button>
-        </fieldset>
-        <input type="hidden" name="Category" id="hiddenCategory" required>
-        <span class="error-msg" id="typeError">Pick one category.</span>
-      </div>
-
-      <div class="field">
-        <label for="pitch">Describe your 30-second act</label>
-        <textarea id="pitch" name="Pitch" maxlength="280" placeholder="What will you do in your 30 seconds? Keep it punchy — the judges are the audience, so make it easy to picture."></textarea>
-        <div class="counter"><span id="charCount">0</span>/280</div>
-      </div>
-
-      <div class="field">
-        <label for="videoLink">Link to your clip</label>
-        <input type="url" id="videoLink" name="VideoLink" placeholder="Google Drive, Instagram Reel, or YouTube link" required />
-        <span class="hint">Upload your 30-second video or voice note anywhere shareable and paste the link here — Google Drive (set to "Anyone with the link") works great.</span>
-      </div>
-
-      <div class="consent">
-        <input type="checkbox" id="consent" required />
-        <label for="consent">I confirm this is my own content and I agree to be featured on Tripura's latent show's Instagram if shortlisted.</label>
-      </div>
-
-      <button type="submit" class="submit-btn" id="submitBtn">Submit My Entry</button>
-    </form>
+    </div>
   </div>
 </section>
 
-<!-- SUCCESS -->
-<section class="success-screen" id="successScreen">
+<!-- ABOUT SPIKE SKILLS -->
+<section id="about" class="about-section">
+  <div class="wrap about-grid">
+    <div class="about-content">
+      <div class="sec-eyebrow mono">Who We Are</div>
+      <h2>Revolutionizing EdTech in India</h2>
+      <p>Spike Skills is a premier Indian EdTech and e-learning platform dedicated to bridging the gap between academic education and industry requirements. We don't just teach skills; we prepare you for the real-world job market.</p>
+      <p>In today's highly competitive Indian job market, degrees alone aren't enough. Top-tier companies demand hands-on experience and practical problem-solving abilities. That is exactly why Spike Skills was built.</p>
+      
+      <div class="about-features">
+        <div class="a-feat">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+          Pay After Placement Facility
+        </div>
+        <div class="a-feat">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+          Guest Lectures by Founders & Industry HRs
+        </div>
+        <div class="a-feat">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+          Top Mentors & Industry Specialists
+        </div>
+      </div>
+    </div>
+    <div>
+       <div class="panel" style="padding: 40px 30px; text-align: center;">
+          <h3 style="color:var(--gold-bright); font-size:24px; margin-bottom: 10px;">Your Career, Our Responsibility</h3>
+          <p style="color:var(--slate); font-size:14px; line-height: 1.6;">Our exclusive mentorship programs bring industry leaders directly to your screen. From mock interviews to resume building, we guide you at every single step until you land your dream job.</p>
+       </div>
+    </div>
+  </div>
+</section>
+
+<div class="trust"><div class="trust-track" id="trustTrack">
+  <!-- Trust items populated by JS -->
+</div></div>
+
+<section id="placement" class="payafter">
   <div class="wrap">
-    <div class="success-badge">🔥</div>
-    <h2>Entry received!</h2>
-    <p>Your entry is in the pot. If you're shortlisted for this week's battle, we'll DM your Instagram handle before the reel goes live.</p>
-    <div class="success-code" id="entryCode">TDL-0000</div>
+    <div class="sec-head reveal">
+      <div class="sec-eyebrow mono">The Spike Skills difference</div>
+      <h2>LEARN NOW.<br>PAY AFTER PLACEMENT.</h2>
+      <p>Selected Spike Skills career courses follow a Pay Fee After Placement model, allowing eligible students to focus on learning, practice and career preparation before paying the applicable course fee. Terms &amp; eligibility apply.</p>
+    </div>
+    <div class="timeline reveal" id="timeline">
+      <div class="tl-step"><div class="tl-num">1</div><h4>Enroll</h4><p>Book your seat for just ₹99.</p></div>
+      <div class="tl-step"><div class="tl-num">2</div><h4>Learn</h4><p>Attend 100% live classes with top mentors.</p></div>
+      <div class="tl-step"><div class="tl-num">3</div><h4>Get Placed</h4><p>Clear interviews with our dedicated placement support.</p></div>
+      <div class="tl-step"><div class="tl-num">4</div><h4>Pay Fee</h4><p>Pay the remaining fee only after you secure a job.</p></div>
+    </div>
+    <div class="terms-note">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8B93A6" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+      Terms &amp; Eligibility Apply — see Pay After Placement Terms for full conditions.
+    </div>
+  </div>
+</section>
+
+<section id="courses">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-eyebrow mono">Career Courses · 100% Live Classes</div>
+      <h2>Skills built for the job you want next.</h2>
+      <p>One month. Live, instructor-led training. Practical projects, interview preparation, and placement support built into every career course. Book your seat now for just ₹99.</p>
+    </div>
+    <div class="grid" id="courseGrid">
+      <!-- Populated by JS -->
+    </div>
+  </div>
+</section>
+
+<section class="mentors" id="mentorsSection">
+  <div class="wrap" style="padding:36px 0;">
+    <div class="mentors-track" id="mentorsTrack">
+       <!-- Mentors populated by JS -->
+    </div>
+  </div>
+</section>
+
+<section id="packages" style="padding-top:96px;">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-eyebrow mono">Top Packages · Pay Now</div>
+      <h2>Focused career tools, ready in a week.</h2>
+      <p>Standalone packages for resume, interview and career-launch essentials — no long commitment required. Launch pricing, limited seats per batch.</p>
+    </div>
+    <div class="pkg-grid" id="pkgGrid">
+      <!-- Populated by JS -->
+    </div>
+  </div>
+</section>
+
+<section id="reviews" style="padding-top:0;">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-eyebrow mono">Student Reviews</div>
+      <h2>What students are saying.</h2>
+      <p>Read from our alumni who successfully transitioned into the industry after joining Spike Skills.</p>
+    </div>
+    <div class="review-grid" id="reviewGrid">
+      <!-- Populated by JS -->
+    </div>
   </div>
 </section>
 
 <footer>
-  <p>Tripura's latent show — a local entertainment battle, only on Instagram.</p>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-col">
+        <div class="logo spike-mark" style="margin-bottom:14px;">
+          <svg viewBox="0 0 60 24" fill="none"><polyline points="1,20 12,14 20,18 32,4 42,10 59,2" stroke="#C9A24B" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          SPIKE SKILLS
+        </div>
+        <p style="color:var(--slate); font-size:13.5px; max-width:230px;">Skills That Build Futures. India's top Pay After Placement EdTech platform.</p>
+      </div>
+      <div class="foot-col">
+        <h5>COURSES</h5>
+        <a href="#courses">Digital Marketing</a>
+        <a href="#courses">Data Analytics</a>
+        <a href="#courses">UI/UX Design</a>
+        <a href="#courses">Full Stack Dev</a>
+      </div>
+      <div class="foot-col">
+        <h5>COMPANY</h5>
+        <a href="#about">About Us</a>
+        <a href="#placement">Pay After Placement</a>
+        <a href="#mentorsSection">Our Mentors</a>
+        <a href="#">Contact Us</a>
+      </div>
+      <div class="foot-col">
+        <h5>LEGAL</h5>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms & Conditions</a>
+        <a href="#">Refund Policy</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <p>&copy; 2026 Spike Skills. All rights reserved.</p>
+    </div>
+  </div>
 </footer>
 
+<!-- ENROLLMENT MODAL -->
+<div class="modal-overlay" id="enrollModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    
+    <!-- Step 1: Details Form -->
+    <div id="step1">
+      <h3 id="modalTitle">Book Your Seat</h3>
+      <p class="modal-sub" id="modalSub">Fill your details to proceed with the booking.</p>
+      
+      <form id="enrollForm">
+        <div class="field">
+          <label>Full Name</label>
+          <input type="text" id="userName" required placeholder="Enter your full name">
+        </div>
+        <div class="field">
+          <label>Email Address</label>
+          <input type="email" id="userEmail" required placeholder="name@example.com">
+        </div>
+        <div class="field">
+          <label>Phone Number</label>
+          <input type="tel" id="userPhone" required placeholder="+91 XXXXX XXXXX">
+        </div>
+        <button type="submit" class="btn btn-gold modal-submit" id="submitBtn">
+          Book Your Seat <span id="btnPrice" style="margin-left:5px;">(₹99)</span>
+        </button>
+      </form>
+    </div>
+
+    <!-- Step 2: Razorpay Payment Container -->
+    <div id="step2">
+      <h3>Details Confirmed!</h3>
+      <p>Please click the button below to complete your payment securely via Razorpay.</p>
+      <div class="rzp-wrapper" id="rzpContainer">
+        <!-- Razorpay Script will be injected here automatically -->
+      </div>
+    </div>
+
+  </div>
+</div>
+
 <script>
-  // ---------- floating particles ----------
-  const particleHost = document.getElementById('particles');
-  const emojis = ['🌶️','✨','🔥'];
-  for (let i = 0; i < 6; i++) {
-    const el = document.createElement('div');
-    el.className = 'particle';
-    el.textContent = emojis[i % emojis.length];
-    el.style.fontSize = (12 + Math.random()*10) + 'px';
-    el.style.left = (Math.random()*90 + 2) + '%';
-    el.style.top = (Math.random()*70 + 5) + '%';
-    el.style.animationDuration = (7 + Math.random()*5) + 's';
-    el.style.animationDelay = (Math.random()*4) + 's';
-    document.querySelector('.hero').appendChild(el);
+  // --- DATA ---
+  const courses = [
+    { title: "AI Automation & Digital Marketing", price: "₹99", strike: "₹1,999", rzp: "pl_TRjFjl73rw4r9U" },
+    { title: "AI Tools & Prompt Engineering", price: "₹99", strike: "₹1,499", rzp: "pl_TRjFjl73rw4r9U" },
+    { title: "Business & Startup Management", price: "₹99", strike: "₹2,999", rzp: "pl_TRjFjl73rw4r9U" },
+    { title: "Full Stack Web Development", price: "₹99", strike: "₹4,999", rzp: "pl_TRjFjl73rw4r9U" },
+    { title: "Data Science & Analytics", price: "₹99", strike: "₹3,999", rzp: "pl_TRjFjl73rw4r9U" },
+    { title: "Advanced UI/UX Design", price: "₹99", strike: "₹2,499", rzp: "pl_TRjFjl73rw4r9U" },
+    { title: "Cloud Computing & DevOps", price: "₹99", strike: "₹4,999", rzp: "pl_TRjFjl73rw4r9U" },
+    { title: "Cyber Security & Hacking", price: "₹99", strike: "₹3,999", rzp: "pl_TRjFjl73rw4r9U" },
+    { title: "Product Management Mastery", price: "₹99", strike: "₹3,499", rzp: "pl_TRjFjl73rw4r9U" }
+  ];
+
+  const packages = [
+    { title: "Premium Resume Building", desc: "Get your resume crafted by industry HRs to pass ATS systems.", price: "₹499", rzp: "pl_TRjKKnN3HP1W8q" },
+    { title: "LinkedIn Optimization", desc: "Make your profile stand out to recruiters instantly.", price: "₹399", rzp: "pl_TRjLrcfVXT3qg4" },
+    { title: "Interview Preparation", desc: "Top FAANG frameworks to crack any technical or HR round.", price: "₹799", rzp: "pl_TRjMq5lvLyQ6Wl" },
+    { title: "1-on-1 Mock Interviews", desc: "Live mock interview with detailed feedback and scorecard.", price: "₹999", rzp: "pl_TRjO8tpR7NXNe3" },
+    { title: "Expert Career Counseling", desc: "Confused about your path? Get guided by founders & leaders.", price: "₹599", rzp: "pl_TRjPBUGaG28Mzp" },
+    { title: "Portfolio Review Session", desc: "Get your projects reviewed by senior developers and designers.", price: "₹699", rzp: "pl_TRjQ5AXxEZieuD" }
+  ];
+
+  const reviews = [
+    { name: "Rahul Sharma", role: "Placed at TCS", text: "Spike Skills changed my life! The Pay After Placement model gave me the confidence to focus entirely on my skills. The guest lectures by HRs were an eye-opener." },
+    { name: "Priya Desai", role: "Placed at Startup", text: "The ₹99 booking fee for the Digital Marketing course is a steal. The live classes are highly interactive, and the mentors really push you to build practical projects." },
+    { name: "Amit Verma", role: "Full Stack Developer", text: "I bought the Mock Interview package before my final rounds. The detailed feedback I received helped me clear the interview with ease. Highly recommended!" }
+  ];
+
+  const trustLogos = ["Google", "Amazon", "Microsoft", "TCS", "Infosys", "Wipro", "Tech Mahindra", "Cognizant", "Accenture", "IBM"];
+
+  // --- RENDER FUNCTIONS ---
+  document.getElementById('courseGrid').innerHTML = courses.map(c => `
+    <div class="card reveal">
+      <div class="discount-flag">SEATS FILLING FAST</div>
+      <div class="badges"><span class="badge badge-live">LIVE COHORT</span><span class="badge badge-gold">PAY AFTER PLACEMENT</span></div>
+      <h3>${c.title}</h3>
+      <p class="desc">1 Month Intensive Training + Placement Assistance.</p>
+      <div class="card-meta">
+        <div class="price-row">
+          <span class="price">${c.price} <span class="model">BOOKING FEE</span></span>
+          <span class="price-strike">${c.strike}</span>
+        </div>
+        <div class="seats-left"><span class="dot"></span> Only a few seats left</div>
+        <button class="btn btn-gold enroll-btn" onclick="openModal('${c.title}', '${c.price}', '${c.rzp}')">Enroll Now</button>
+      </div>
+    </div>
+  `).join('');
+
+  document.getElementById('pkgGrid').innerHTML = packages.map(p => `
+    <div class="pkg-card reveal">
+      <h4>${p.title}</h4>
+      <p class="pdesc">${p.desc}</p>
+      <div class="pkg-foot">
+        <span class="pkg-price">${p.price}</span>
+      </div>
+      <button class="btn btn-ghost enroll-btn" style="width:100%" onclick="openModal('${p.title}', '${p.price}', '${p.rzp}')">Get Package</button>
+    </div>
+  `).join('');
+
+  document.getElementById('reviewGrid').innerHTML = reviews.map(r => `
+    <div class="review-card reveal">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">"${r.text}"</p>
+      <p class="review-who">${r.name}</p>
+      <p class="review-role">${r.role}</p>
+    </div>
+  `).join('');
+
+  let trustHTML = '';
+  for(let i=0; i<3; i++) {
+    trustHTML += trustLogos.map(t => `<div class="trust-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> Alumni placed at ${t}</div>`).join('');
+  }
+  document.getElementById('trustTrack').innerHTML = trustHTML;
+  document.getElementById('mentorsTrack').innerHTML = trustHTML; // re-using track logic for mentors visual
+
+  // --- MODAL & PAYMENT LOGIC ---
+  let currentRzpId = "";
+  let currentTitle = "";
+
+  function openModal(title, price, rzpId) {
+    currentRzpId = rzpId;
+    currentTitle = title;
+    
+    // Reset Modal State
+    document.getElementById('step1').style.display = 'block';
+    document.getElementById('step2').style.display = 'none';
+    document.getElementById('enrollForm').reset();
+    document.getElementById('submitBtn').innerHTML = `Book Your Seat <span style="margin-left:5px;">(${price})</span>`;
+    
+    document.getElementById('enrollModal').classList.add('open');
   }
 
-  // ---------- chip select ----------
-  let selectedType = null;
-  const hiddenCategory = document.getElementById('hiddenCategory');
-  
-  document.querySelectorAll('#contentType .chip').forEach(chip => {
-    chip.addEventListener('click', () => {
-      document.querySelectorAll('#contentType .chip').forEach(c => c.classList.remove('active'));
-      chip.classList.add('active');
-      selectedType = chip.dataset.value;
-      hiddenCategory.value = selectedType; // Update hidden input for Formspree
-      document.getElementById('typeError').style.display = 'none';
+  function closeModal() {
+    document.getElementById('enrollModal').classList.remove('open');
+  }
+
+  // Handle Formspree submission AND trigger Razorpay button
+  document.getElementById('enrollForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const btn = document.getElementById('submitBtn');
+    btn.innerHTML = "Processing...";
+    btn.disabled = true;
+
+    // Gather Form Data
+    const formData = new FormData();
+    formData.append('Course/Package', currentTitle);
+    formData.append('Name', document.getElementById('userName').value);
+    formData.append('Email', document.getElementById('userEmail').value);
+    formData.append('Phone', document.getElementById('userPhone').value);
+
+    // Send to Formspree silently
+    fetch('https://formspree.io/f/xgaworqj', {
+      method: 'POST',
+      body: formData,
+      headers: {
+        'Accept': 'application/json'
+      }
+    }).then(response => {
+      // Formspree Success! Now Show Razorpay
+      document.getElementById('step1').style.display = 'none';
+      document.getElementById('step2').style.display = 'block';
+      
+      // Inject Razorpay Button Script dynamically
+      const rzpContainer = document.getElementById('rzpContainer');
+      rzpContainer.innerHTML = ''; // Clear previous button if any
+      
+      const rzpForm = document.createElement('form');
+      const rzpScript = document.createElement('script');
+      rzpScript.src = "https://checkout.razorpay.com/v1/payment-button.js";
+      rzpScript.dataset.payment_button_id = currentRzpId;
+      rzpScript.async = true;
+      
+      rzpForm.appendChild(rzpScript);
+      rzpContainer.appendChild(rzpForm);
+
+    }).catch(error => {
+      alert("Something went wrong. Please try again.");
+      btn.innerHTML = `Try Again`;
+      btn.disabled = false;
     });
   });
 
-  // ---------- char counter ----------
-  const pitch = document.getElementById('pitch');
-  const charCount = document.getElementById('charCount');
-  pitch.addEventListener('input', () => {
-    charCount.textContent = pitch.value.length;
-  });
-
-  // ---------- submit ----------
-  const form = document.getElementById('entryForm');
-  const submitBtn = document.getElementById('submitBtn');
-
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-
-    if (!selectedType) {
-      document.getElementById('typeError').style.display = 'block';
-      document.getElementById('contentType').scrollIntoView({ behavior: 'smooth', block: 'center' });
-      return;
-    }
-    if (!form.checkValidity()) {
-      form.reportValidity();
-      return;
-    }
-
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Submitting…';
-
-    const code = 'TDL-' + Math.floor(1000 + Math.random() * 9000);
-    
-    // Prepare data for Formspree
-    const formData = new FormData(form);
-    formData.append("Entry Code", code); // Append custom entry code
-
-    try {
-      const response = await fetch(form.action, {
-        method: form.method,
-        body: formData,
-        headers: {
-            'Accept': 'application/json'
-        }
-      });
-      
-      if (response.ok) {
-        // Show success screen
-        document.getElementById('entryCode').textContent = code;
-        document.getElementById('form-section').style.display = 'none';
-        document.querySelector('.how').style.display = 'none';
-        document.getElementById('successScreen').style.display = 'block';
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      } else {
-        alert("Oops! There was a problem submitting your form.");
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Submit My Entry';
-      }
-    } catch (error) {
-      console.error('Submission error:', error);
-      alert("Network error! Please check your connection and try again.");
-      submitBtn.disabled = false;
-      submitBtn.textContent = 'Submit My Entry';
-    }
-  });
+  // Reveal Animations on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => { if(entry.isIntersecting) entry.target.classList.add('in'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 </script>
 </body>
 </html>
